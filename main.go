@@ -8,9 +8,23 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	// _ "github.com/lib/pq"
 )
 
+// @title Fiber Test Rest API
+// @version 0.1.0
+// @description Starting Swagger docs
+// @termsOfService https://version-one.com/terms/
+
+// @contact.name Version-One
+// @contact.email support@version.one.com
+
+// @license.name BSD
+// @license.url https://opensource.org/licenses/BSD-3-Clause
+
+// @host localhost:3000
+// @BasePath /api/v1/
+
+// @securityDefinitions.basic BasicAuth
 func main() {
 	if err := database.InitDatabase(); err != nil {
 		log.Fatal(err)

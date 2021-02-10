@@ -1,0 +1,40 @@
+basePath: /api/v1/
+definitions:
+  model.ProductModel:
+    properties:
+      amount:
+        type: integer
+      category:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: support@version.one.com
+    name: Version-One
+  description: Starting Swagger docs
+  license:
+    name: BSD
+    url: https://opensource.org/licenses/BSD-3-Clause
+  termsOfService: https://version-one.com/terms/
+  title: Fiber Test Rest API
+  version: 0.1.0
+paths:
+  /product:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductModel'
+      summary: Returns an array with all products on DB
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

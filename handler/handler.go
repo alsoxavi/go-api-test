@@ -6,7 +6,11 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-// GetAllProducts is a fuction from db
+// GetAllProducts godoc
+// @Summary Returns an array with all products on DB
+// @Produce json
+// @Success 200 {object} model.ProductModel
+// @Router /product [get]
 func GetAllProducts(c *fiber.Ctx) error {
 	db := database.DBConn
 	var products []model.Product

@@ -1,0 +1,61 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Starting Swagger docs",
+        "title": "Fiber Test Rest API",
+        "termsOfService": "https://version-one.com/terms/",
+        "contact": {
+            "name": "Version-One",
+            "email": "support@version.one.com"
+        },
+        "license": {
+            "name": "BSD",
+            "url": "https://opensource.org/licenses/BSD-3-Clause"
+        },
+        "version": "0.1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1/",
+    "paths": {
+        "/product": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Returns an array with all products on DB",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ProductModel"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.ProductModel": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    }
+}
