@@ -8,11 +8,11 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	_ "github.com/lib/pq"
+	// _ "github.com/lib/pq"
 )
 
 func main() {
-	if err := database.Connect(); err != nil {
+	if err := database.InitDatabase(); err != nil {
 		log.Fatal(err)
 	}
 
