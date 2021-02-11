@@ -1,6 +1,8 @@
 package handler
 
 import (
+	_ "net/http" // Needed for docs
+
 	"github.com/alsoxavi/go-api-test/database"
 	"github.com/alsoxavi/go-api-test/model"
 	"github.com/gofiber/fiber/v2"
@@ -10,6 +12,8 @@ import (
 // @Summary Returns an array with all products on DB
 // @Produce json
 // @Success 200 {object} model.ProductModel
+// @Failure 404 {object} model.ErrorModel
+// @Security BasicAuth
 // @Router /product [get]
 func GetAllProducts(c *fiber.Ctx) error {
 	db := database.DBConn
@@ -30,7 +34,14 @@ func GetAllProducts(c *fiber.Ctx) error {
 	})
 }
 
-// GetSingleProduct from db
+// GetSingleProduct godoc
+// @Summary Returns a single product from DB
+// @Produce json
+// @Success 200 {object} model.ProductModel
+// @Failure 404 {object} model.ErrorModel
+// @Security BasicAuth
+// @Router /product/{id} [get]
+// @Param id path integer true "Product ID"
 func GetSingleProduct(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn
@@ -51,7 +62,15 @@ func GetSingleProduct(c *fiber.Ctx) error {
 	})
 }
 
-// CreateProduct handler
+// CreateProduct godoc
+// @Summary Creates a new product in DB
+// @Produce json
+// @Accept json
+// @Success 201 {object} model.ProductModel
+// @Failure 500 {object} model.ErrorModel
+// @Param product body model.ProductModel true "Add product"
+// @Security BasicAuth
+// @Router /product [post]
 func CreateProduct(c *fiber.Ctx) error {
 	db := database.DBConn
 	product := new(model.Product)
@@ -71,7 +90,14 @@ func CreateProduct(c *fiber.Ctx) error {
 	})
 }
 
-// DeleteProduct from db
+// DeleteProduct godoc
+// @Summary Deletes a product from DB
+// @Produce json
+// @Success 204 {object} model.ProductModel
+// @Failure 500 {object} model.ErrorModel
+// @Security BasicAuth
+// @Router /product/{id} [delete]
+// @Param id path integer true "Product ID"
 func DeleteProduct(c *fiber.Ctx) error {
 	id := c.Params("id")
 	db := database.DBConn

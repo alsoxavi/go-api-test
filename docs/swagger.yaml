@@ -1,5 +1,17 @@
 basePath: /api/v1/
 definitions:
+  model.ErrorModel:
+    properties:
+      code:
+        example: 400
+        type: integer
+      error:
+        example: true
+        type: boolean
+      message:
+        example: status bad request
+        type: string
+    type: object
   model.ProductModel:
     properties:
       amount:
@@ -33,7 +45,80 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/model.ProductModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorModel'
+      security:
+      - BasicAuth: []
       summary: Returns an array with all products on DB
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Add product
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/model.ProductModel'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.ProductModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorModel'
+      security:
+      - BasicAuth: []
+      summary: Creates a new product in DB
+  /product/{id}:
+    delete:
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.ProductModel'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorModel'
+      security:
+      - BasicAuth: []
+      summary: Deletes a product from DB
+    get:
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ProductModel'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ErrorModel'
+      security:
+      - BasicAuth: []
+      summary: Returns a single product from DB
 securityDefinitions:
   BasicAuth:
     type: basic
