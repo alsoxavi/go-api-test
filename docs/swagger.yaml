@@ -1,18 +1,6 @@
 basePath: /api/v1/
 definitions:
-  model.ErrorModel:
-    properties:
-      code:
-        example: 400
-        type: integer
-      error:
-        example: true
-        type: boolean
-      message:
-        example: status bad request
-        type: string
-    type: object
-  model.ProductModel:
+  model.Product:
     properties:
       amount:
         type: integer
@@ -21,6 +9,18 @@ definitions:
       description:
         type: string
       name:
+        type: string
+    type: object
+  model.Result:
+    properties:
+      code:
+        type: integer
+      data:
+        type: object
+      error:
+        example: false
+        type: boolean
+      message:
         type: string
     type: object
 host: localhost:3000
@@ -44,11 +44,18 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.ProductModel'
+            allOf:
+            - $ref: '#/definitions/model.Result'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Product'
+                  type: array
+              type: object
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/model.ErrorModel'
+            $ref: '#/definitions/model.Result'
       security:
       - BasicAuth: []
       summary: Returns an array with all products on DB
@@ -61,18 +68,25 @@ paths:
         name: product
         required: true
         schema:
-          $ref: '#/definitions/model.ProductModel'
+          $ref: '#/definitions/model.Product'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/model.ProductModel'
+            allOf:
+            - $ref: '#/definitions/model.Result'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Product'
+                  type: array
+              type: object
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrorModel'
+            $ref: '#/definitions/model.Result'
       security:
       - BasicAuth: []
       summary: Creates a new product in DB
@@ -88,13 +102,11 @@ paths:
       - application/json
       responses:
         "204":
-          description: No Content
-          schema:
-            $ref: '#/definitions/model.ProductModel'
+          description: ""
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/model.ErrorModel'
+            $ref: '#/definitions/model.Result'
       security:
       - BasicAuth: []
       summary: Deletes a product from DB
@@ -111,11 +123,18 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.ProductModel'
+            allOf:
+            - $ref: '#/definitions/model.Result'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Product'
+                  type: array
+              type: object
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/model.ErrorModel'
+            $ref: '#/definitions/model.Result'
       security:
       - BasicAuth: []
       summary: Returns a single product from DB

@@ -4,7 +4,6 @@ go 1.15
 
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
-	github.com/arsmn/fiber-swagger v1.3.3
 	github.com/arsmn/fiber-swagger/v2 v2.3.0
 	github.com/go-openapi/spec v0.20.3 // indirect
 	github.com/gofiber/fiber/v2 v2.5.0

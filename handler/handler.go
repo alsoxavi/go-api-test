@@ -11,8 +11,8 @@ import (
 // GetAllProducts godoc
 // @Summary Returns an array with all products on DB
 // @Produce json
-// @Success 200 {object} model.ProductModel
-// @Failure 404 {object} model.ErrorModel
+// @Success 200 {object} model.Result{data=[]model.Product}
+// @Failure 404 {object} model.Result
 // @Security BasicAuth
 // @Router /product [get]
 func GetAllProducts(c *fiber.Ctx) error {
@@ -37,8 +37,8 @@ func GetAllProducts(c *fiber.Ctx) error {
 // GetSingleProduct godoc
 // @Summary Returns a single product from DB
 // @Produce json
-// @Success 200 {object} model.ProductModel
-// @Failure 404 {object} model.ErrorModel
+// @Success 200 {object} model.Result{data=[]model.Product}
+// @Failure 404 {object} model.Result
 // @Security BasicAuth
 // @Router /product/{id} [get]
 // @Param id path integer true "Product ID"
@@ -66,9 +66,9 @@ func GetSingleProduct(c *fiber.Ctx) error {
 // @Summary Creates a new product in DB
 // @Produce json
 // @Accept json
-// @Success 201 {object} model.ProductModel
-// @Failure 500 {object} model.ErrorModel
-// @Param product body model.ProductModel true "Add product"
+// @Success 201 {object} model.Result{data=[]model.Product}
+// @Failure 500 {object} model.Result
+// @Param product body model.Product true "Add product"
 // @Security BasicAuth
 // @Router /product [post]
 func CreateProduct(c *fiber.Ctx) error {
@@ -93,8 +93,8 @@ func CreateProduct(c *fiber.Ctx) error {
 // DeleteProduct godoc
 // @Summary Deletes a product from DB
 // @Produce json
-// @Success 204 {object} model.ProductModel
-// @Failure 500 {object} model.ErrorModel
+// @Success 204
+// @Failure 500 {object} model.Result
 // @Security BasicAuth
 // @Router /product/{id} [delete]
 // @Param id path integer true "Product ID"

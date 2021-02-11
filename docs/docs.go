@@ -47,13 +47,28 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.ProductModel"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Result"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Product"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrorModel"
+                            "$ref": "#/definitions/model.Result"
                         }
                     }
                 }
@@ -78,7 +93,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/model.ProductModel"
+                            "$ref": "#/definitions/model.Product"
                         }
                     }
                 ],
@@ -86,13 +101,28 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/model.ProductModel"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Result"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Product"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrorModel"
+                            "$ref": "#/definitions/model.Result"
                         }
                     }
                 }
@@ -122,13 +152,28 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.ProductModel"
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Result"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Product"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrorModel"
+                            "$ref": "#/definitions/model.Result"
                         }
                     }
                 }
@@ -154,15 +199,12 @@ var doc = `{
                 ],
                 "responses": {
                     "204": {
-                        "description": "No Content",
-                        "schema": {
-                            "$ref": "#/definitions/model.ProductModel"
-                        }
+                        "description": ""
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/model.ErrorModel"
+                            "$ref": "#/definitions/model.Result"
                         }
                     }
                 }
@@ -170,24 +212,7 @@ var doc = `{
         }
     },
     "definitions": {
-        "model.ErrorModel": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "example": 400
-                },
-                "error": {
-                    "type": "boolean",
-                    "example": true
-                },
-                "message": {
-                    "type": "string",
-                    "example": "status bad request"
-                }
-            }
-        },
-        "model.ProductModel": {
+        "model.Product": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -200,6 +225,24 @@ var doc = `{
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Result": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "object"
+                },
+                "error": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "message": {
                     "type": "string"
                 }
             }
