@@ -49,7 +49,12 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/model.Product'
+                    allOf:
+                    - $ref: '#/definitions/model.Product'
+                    - properties:
+                        id:
+                          type: integer
+                      type: object
                   type: array
               type: object
         "404":
@@ -80,7 +85,12 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/model.Product'
+                    allOf:
+                    - $ref: '#/definitions/model.Product'
+                    - properties:
+                        id:
+                          type: integer
+                      type: object
                   type: array
               type: object
         "500":
@@ -128,7 +138,12 @@ paths:
             - properties:
                 data:
                   items:
-                    $ref: '#/definitions/model.Product'
+                    allOf:
+                    - $ref: '#/definitions/model.Product'
+                    - properties:
+                        id:
+                          type: integer
+                      type: object
                   type: array
               type: object
         "404":

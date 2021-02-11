@@ -11,7 +11,7 @@ import (
 // GetAllProducts godoc
 // @Summary Returns an array with all products on DB
 // @Produce json
-// @Success 200 {object} model.Result{data=[]model.Product}
+// @Success 200 {object} model.Result{data=[]model.Product{id=int}}
 // @Failure 404 {object} model.Result
 // @Security BasicAuth
 // @Router /product [get]
@@ -37,7 +37,7 @@ func GetAllProducts(c *fiber.Ctx) error {
 // GetSingleProduct godoc
 // @Summary Returns a single product from DB
 // @Produce json
-// @Success 200 {object} model.Result{data=[]model.Product}
+// @Success 200 {object} model.Result{data=[]model.Product{id=int}}
 // @Failure 404 {object} model.Result
 // @Security BasicAuth
 // @Router /product/{id} [get]
@@ -66,7 +66,7 @@ func GetSingleProduct(c *fiber.Ctx) error {
 // @Summary Creates a new product in DB
 // @Produce json
 // @Accept json
-// @Success 201 {object} model.Result{data=[]model.Product}
+// @Success 201 {object} model.Result{data=[]model.Product{id=int}}
 // @Failure 500 {object} model.Result
 // @Param product body model.Product true "Add product"
 // @Security BasicAuth
