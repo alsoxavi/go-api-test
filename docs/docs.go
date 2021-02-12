@@ -32,7 +32,63 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/product": {
+        "/messages": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Sends a new SMS",
+                "parameters": [
+                    {
+                        "description": "SMS",
+                        "name": "sms",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.SMS"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Result"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.SMS"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
             "get": {
                 "security": [
                     {
@@ -41,6 +97,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Products"
                 ],
                 "summary": "Returns an array with all products on DB",
                 "responses": {
@@ -97,6 +156,9 @@ var doc = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Products"
+                ],
                 "summary": "Creates a new product in DB",
                 "parameters": [
                     {
@@ -121,22 +183,19 @@ var doc = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "allOf": [
-                                                    {
-                                                        "$ref": "#/definitions/model.Product"
-                                                    },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer"
-                                                            }
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/model.Product"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
                                                         }
                                                     }
-                                                ]
-                                            }
+                                                }
+                                            ]
                                         }
                                     }
                                 }
@@ -152,7 +211,7 @@ var doc = `{
                 }
             }
         },
-        "/product/{id}": {
+        "/products/{id}": {
             "get": {
                 "security": [
                     {
@@ -161,6 +220,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Products"
                 ],
                 "summary": "Returns a single product from DB",
                 "parameters": [
@@ -184,22 +246,19 @@ var doc = `{
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "allOf": [
-                                                    {
-                                                        "$ref": "#/definitions/model.Product"
-                                                    },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer"
-                                                            }
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/model.Product"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
                                                         }
                                                     }
-                                                ]
-                                            }
+                                                }
+                                            ]
                                         }
                                     }
                                 }
@@ -222,6 +281,9 @@ var doc = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Products"
                 ],
                 "summary": "Deletes a product from DB",
                 "parameters": [
@@ -279,6 +341,17 @@ var doc = `{
                     "example": false
                 },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SMS": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "phoneNumber": {
                     "type": "string"
                 }
             }

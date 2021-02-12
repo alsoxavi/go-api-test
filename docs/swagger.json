@@ -17,7 +17,63 @@
     "host": "localhost:3000",
     "basePath": "/api/v1/",
     "paths": {
-        "/product": {
+        "/messages": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Sends a new SMS",
+                "parameters": [
+                    {
+                        "description": "SMS",
+                        "name": "sms",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.SMS"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/model.Result"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.SMS"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.Result"
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
             "get": {
                 "security": [
                     {
@@ -26,6 +82,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Products"
                 ],
                 "summary": "Returns an array with all products on DB",
                 "responses": {
@@ -82,6 +141,9 @@
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "Products"
+                ],
                 "summary": "Creates a new product in DB",
                 "parameters": [
                     {
@@ -106,22 +168,19 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "allOf": [
-                                                    {
-                                                        "$ref": "#/definitions/model.Product"
-                                                    },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer"
-                                                            }
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/model.Product"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
                                                         }
                                                     }
-                                                ]
-                                            }
+                                                }
+                                            ]
                                         }
                                     }
                                 }
@@ -137,7 +196,7 @@
                 }
             }
         },
-        "/product/{id}": {
+        "/products/{id}": {
             "get": {
                 "security": [
                     {
@@ -146,6 +205,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Products"
                 ],
                 "summary": "Returns a single product from DB",
                 "parameters": [
@@ -169,22 +231,19 @@
                                     "type": "object",
                                     "properties": {
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "allOf": [
-                                                    {
-                                                        "$ref": "#/definitions/model.Product"
-                                                    },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer"
-                                                            }
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/model.Product"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer"
                                                         }
                                                     }
-                                                ]
-                                            }
+                                                }
+                                            ]
                                         }
                                     }
                                 }
@@ -207,6 +266,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "Products"
                 ],
                 "summary": "Deletes a product from DB",
                 "parameters": [
@@ -264,6 +326,17 @@
                     "example": false
                 },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SMS": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "phoneNumber": {
                     "type": "string"
                 }
             }

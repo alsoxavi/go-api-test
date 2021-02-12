@@ -11,12 +11,16 @@ import (
 // SetupRoutes inits the routs for product access
 func SetupRoutes(app *fiber.App) {
 	api := app.Group("/api")
-	v1 := api.Group("/v1", middleware.AuthReq())
+	v1 := api.Group("/v1")
+	products := v1.Group("/products", middleware.AuthReq())
+	docs := v1.Group("/docs")
+	messages := v1.Group("/messages")
 
-	v1.Get("/docs", swagger.Handler)
-	v1.Get("/docs/*", swagger.Handler)
-	v1.Get("/product", handler.GetAllProducts)
-	v1.Get("/product/:id", handler.GetSingleProduct)
-	v1.Post("/product", handler.CreateProduct)
-	v1.Delete("/product/:id", handler.DeleteProduct)
+	docs.Get("", swagger.Handler)
+	docs.Get("/*", swagger.Handler)
+	products.Get("", handler.GetAllProducts)
+	products.Get(":id", handler.GetSingleProduct)
+	products.Post("", handler.CreateProduct)
+	products.Delete(":id", handler.DeleteProduct)
+	messages.Post("", handler.SendSMS)
 }

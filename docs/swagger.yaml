@@ -23,6 +23,13 @@ definitions:
       message:
         type: string
     type: object
+  model.SMS:
+    properties:
+      message:
+        type: string
+      phoneNumber:
+        type: string
+    type: object
 host: localhost:3000
 info:
   contact:
@@ -36,7 +43,39 @@ info:
   title: Fiber Test Rest API
   version: 0.1.0
 paths:
-  /product:
+  /messages:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: SMS
+        in: body
+        name: sms
+        required: true
+        schema:
+          $ref: '#/definitions/model.SMS'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Result'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.SMS'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.Result'
+      security:
+      - BasicAuth: []
+      summary: Sends a new SMS
+      tags:
+      - Messages
+  /products:
     get:
       produces:
       - application/json
@@ -64,6 +103,8 @@ paths:
       security:
       - BasicAuth: []
       summary: Returns an array with all products on DB
+      tags:
+      - Products
     post:
       consumes:
       - application/json
@@ -84,14 +125,12 @@ paths:
             - $ref: '#/definitions/model.Result'
             - properties:
                 data:
-                  items:
-                    allOf:
-                    - $ref: '#/definitions/model.Product'
-                    - properties:
-                        id:
-                          type: integer
-                      type: object
-                  type: array
+                  allOf:
+                  - $ref: '#/definitions/model.Product'
+                  - properties:
+                      id:
+                        type: integer
+                    type: object
               type: object
         "500":
           description: Internal Server Error
@@ -100,7 +139,9 @@ paths:
       security:
       - BasicAuth: []
       summary: Creates a new product in DB
-  /product/{id}:
+      tags:
+      - Products
+  /products/{id}:
     delete:
       parameters:
       - description: Product ID
@@ -120,6 +161,8 @@ paths:
       security:
       - BasicAuth: []
       summary: Deletes a product from DB
+      tags:
+      - Products
     get:
       parameters:
       - description: Product ID
@@ -137,14 +180,12 @@ paths:
             - $ref: '#/definitions/model.Result'
             - properties:
                 data:
-                  items:
-                    allOf:
-                    - $ref: '#/definitions/model.Product'
-                    - properties:
-                        id:
-                          type: integer
-                      type: object
-                  type: array
+                  allOf:
+                  - $ref: '#/definitions/model.Product'
+                  - properties:
+                      id:
+                        type: integer
+                    type: object
               type: object
         "404":
           description: Not Found
@@ -153,6 +194,8 @@ paths:
       security:
       - BasicAuth: []
       summary: Returns a single product from DB
+      tags:
+      - Products
 securityDefinitions:
   BasicAuth:
     type: basic
